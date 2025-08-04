@@ -1,10 +1,11 @@
 // John Clark
 // CS 143
-// HW #2: Sudoku #2 (Board Setup)
+// HW #3: Sudoku #3 (solve)
 //
 // This program will write code that imports an incomplete sudoku
 // puzzle from a file and prints the board to the screen in a particular way.
 // It can also determine if the board is valid or solved.
+// If it isn't solved, the solve() method will solve it.
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -135,6 +136,43 @@ public class SudokuBoard {
 
         return true;
     }
+    
+    //pre: The board is not solved
+    //post: The board is solved
+    public boolean solve() {
+       if(!isValid()){
+           //base case
+           System.out.println("Board is invalid!");
+           return false;
+       }
+   
+       if(isSolved()){
+           //base case
+           System.out.println("Board is solved!");
+           return true;
+       }
+   
+       //iterate to look for 0
+       for (int i=0; i < 9; i++) { //iterate thru rows
+           for (int j=0; j < 9; j++) { //iterate thru columns
+               if (board[i][j] == 0) {
+                   for (int num = 1; num <= 9; num++) {
+                       //iterate thru numbers 1-9 and see if any solves the board
+                       board[i][j] = num;
+   
+                       if (isValid()==true && solve()==true) {
+                           //board is solved
+                           return true;
+                       }
+                       board[i][j] = 0;
+                   }
+                   return false;
+               }
+           }
+       }
+       return false;
+   }
+
 }
 
 
