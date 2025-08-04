@@ -140,7 +140,37 @@ public class SudokuBoard {
     //pre: The board is not solved
     //post: The board is solved
     public boolean solve() {
-       //TODO
+       if(!isValid()){
+           //base case
+           System.out.println("Board is invalid!");
+           return false;
+       }
+   
+       if(isSolved()){
+           //base case
+           System.out.println("Board is solved!");
+           return true;
+       }
+   
+       //iterate to look for 0
+       for (int i=0; i < 9; i++) { //iterate thru rows
+           for (int j=0; j < 9; j++) { //iterate thru columns
+               if (board[i][j] == 0) {
+                   for (int num = 1; num <= 9; num++) {
+                       //iterate thru numbers 1-9 and see if any solves the board
+                       board[i][j] = num;
+   
+                       if (isValid()==true && solve()==true) {
+                           //board is solved
+                           return true;
+                       }
+                       board[i][j] = 0;
+                   }
+                   return false;
+               }
+           }
+       }
+       return false;
    }
 
 }
